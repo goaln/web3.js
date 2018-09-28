@@ -236,7 +236,11 @@ var outputBlockFormatter = function(block) {
     block.gasLimit = utils.hexToNumber(block.gasLimit);
     block.gasUsed = utils.hexToNumber(block.gasUsed);
     block.size = utils.hexToNumber(block.size);
-    block.timestamp = utils.hexToNumber(block.timestamp);
+    //block.timestamp = utils.hexToNumber(block.timestamp);
+    //WARNING this implementation assumes RAFT timestamp (precision is nanoseconds)
+    //You should not simply assume RAFT if it is not successful rather take a consensus specific action
+    //We are being extra cautious here and converting it back to the same format it was in after dropping the nanoseconds (i.e. a hex string prefixed with 0x)
+    block.timestamp = utils.hexToNumber('0x' + Math.floor(block.timestamp / 1e6).toString(16));
     if (block.number !== null)
         block.number = utils.hexToNumber(block.number);
 
