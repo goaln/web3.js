@@ -14,4 +14,3 @@ bower_components
 .npm/
 .vscode/
 dist/
-!./dist/web3.min.js
